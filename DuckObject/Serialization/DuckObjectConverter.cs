@@ -6,7 +6,7 @@ using Newtonsoft.Json.Converters;
 
 namespace DalSoft.Dynamic.Serialization
 {
-    internal class DuckObjectConverter<T> : ExpandoObjectConverter where T : DuckObject, new()
+    public class DuckObjectConverter<T> : ExpandoObjectConverter where T : DuckObject, new()
     {
         public override bool CanConvert(Type objectType)
         {

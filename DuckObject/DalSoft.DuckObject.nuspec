@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.1-alpha</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/DalSoft/DuckObject/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/DalSoft/DuckObject</projectUrl>
+    <!-- <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl> -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>DuckObject a really simple duck typing framework based on DynamicObject.</description>
+    <releaseNotes>Collection of stuff I've been doing in C# for a while. Not quite ready for primetime but feel free to use, give feedback and send pull requests.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Duck Typing Dynamic DynamicObject</tags>
+  </metadata>
+</package>

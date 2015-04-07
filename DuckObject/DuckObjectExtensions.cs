@@ -285,9 +285,12 @@ namespace DalSoft.Dynamic
             return type.IsValueType || type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
         }
 
-        private static bool IsClassThatWeCanMap(this Type type)
+        public static bool IsClassThatWeCanMap(this Type type)
         {
-            return IsAnonymousType(type) || !IsValueTypeOrPrimitiveOrStringOrDateTime(type);
+            if (IsAnonymousType(type) && !IsValueTypeOrPrimitiveOrStringOrDateTime(type))
+                return true;
+
+            return type.IsClass && !IsValueTypeOrPrimitiveOrStringOrDateTime(type);
         }
     }
 }

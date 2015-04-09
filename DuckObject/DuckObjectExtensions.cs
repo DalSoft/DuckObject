@@ -127,6 +127,7 @@ namespace DalSoft.Dynamic
             return derivedDuckObject;
         }
 
+
         // Based on http://theburningmonk.com/2011/05/idictionarystring-object-to-expandoobject-extension-method/ thanks
         /// <summary>
         /// Takes a Dictionary object, string and produces duckobject where all nested objects are converted duckobjects to.
@@ -197,7 +198,7 @@ namespace DalSoft.Dynamic
 
             if (propertyType != value.GetType()) //try conversion
             {
-                value = value is IConvertible ? Convert.ChangeType(value, propertyType) : (propertyType.IsClass ? value.ToDuckObject() : value);
+                value = value is IConvertible ? Convert.ChangeType(value, propertyType) : (propertyType.IsClassThatWeCanMap() ? value.ToDuckObject() : value);
             }
 
             if (IsAnonymousType(instanceType))
@@ -222,8 +223,7 @@ namespace DalSoft.Dynamic
 
                 if (IsClassThatWeCanMap(typeFromDuckObject))
                 {
-                    //if (typeFromDuckObject.IsValueType) throw new ArgumentException(string.Format("Can't set {0} to a reference type as it is a value type", property.Name));
-                    property.SetValue(anonymousType, IsAnonymousType(property.PropertyType) ? MapDuckObjectToType(valueFromDuckObject.ToDuckObject(), property.GetValue(anonymousType)) : CreateInstance(valueFromDuckObject.ToDuckObject(), property.PropertyType));
+                    property.SetValue(anonymousType, IsAnonymousType(property.PropertyType) ? MapDuckObjectToType(valueFromDuckObject as DuckObject ?? valueFromDuckObject.ToDuckObject(), property.GetValue(anonymousType)) : CreateInstance(valueFromDuckObject.ToDuckObject(), property.PropertyType));
                 }
                 else
                 {
@@ -285,9 +285,12 @@ namespace DalSoft.Dynamic
             return type.IsValueType || type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
         }
 
-        private static bool IsClassThatWeCanMap(this Type type)
+        private static bool IsClassThatWeCanMap(this Type type) //TODO CHECK BUG IN DUCKOBEJC
         {
-            return IsAnonymousType(type) || !IsValueTypeOrPrimitiveOrStringOrDateTime(type);
+            if (IsAnonymousType(type) && !IsValueTypeOrPrimitiveOrStringOrDateTime(type))
+                return true;
+
+            return type.IsClass && !IsValueTypeOrPrimitiveOrStringOrDateTime(type);
         }
     }
 }
